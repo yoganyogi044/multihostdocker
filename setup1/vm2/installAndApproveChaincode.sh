@@ -3,7 +3,7 @@ export ORDERER_CA=${PWD}/../vm4/crypto-config/ordererOrganizations/example.com/o
 export PEER0_ORG2_CA=${PWD}/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 export FABRIC_CFG_PATH=${PWD}/../../artifacts/channel/config/
 
-export CHANNEL_NAME=mychannel
+export CHANNEL_NAME=mychannel1
 
 setGlobalsForPeer0Org2() {
     export CORE_PEER_LOCALMSPID="Org2MSP"
@@ -21,20 +21,20 @@ setGlobalsForPeer1Org2() {
 
 }
 
-presetup() {
-    echo Vendoring Go dependencies ...
-    pushd ./../../artifacts/src/github.com/fabcar/go
-    GO111MODULE=on go mod vendor
-    popd
-    echo Finished vendoring Go dependencies
-}
+# presetup() {
+#     echo Vendoring Go dependencies ...
+#     pushd ./../../artifacts/src/github.com/fabcar/go
+#     GO111MODULE=on go mod vendor
+#     popd
+#     echo Finished vendoring Go dependencies
+# }
 # presetup
 
-CHANNEL_NAME="mychannel"
-CC_RUNTIME_LANGUAGE="golang"
+CHANNEL_NAME="mychannel1"
+CC_RUNTIME_LANGUAGE="node"
 VERSION="1"
-CC_SRC_PATH="./../../artifacts/src/github.com/fabcar/go"
-CC_NAME="fabcar"
+CC_SRC_PATH="./../../artifacts/chaincode/birthCert"
+CC_NAME="birthcert"
 
 packageChaincode() {
     rm -rf ${CC_NAME}.tar.gz
@@ -71,7 +71,7 @@ approveForMyOrg2() {
     setGlobalsForPeer0Org2
 
     # Replace localhost with your orderer's vm IP address
-    peer lifecycle chaincode approveformyorg -o localhost:7050 \
+    peer lifecycle chaincode approveformyorg -o 34.125.202.160:7050 \
         --ordererTLSHostnameOverride orderer.example.com --tls $CORE_PEER_TLS_ENABLED \
         --cafile $ORDERER_CA --channelID $CHANNEL_NAME --name ${CC_NAME} \
         --version ${VERSION} --init-required --package-id ${PACKAGE_ID} \
