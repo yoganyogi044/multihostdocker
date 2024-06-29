@@ -14,7 +14,7 @@ rm -rf ../../channel-artifacts/*
 SYS_CHANNEL="sys-channel"
 
 # channel name defaults to "mychannel"
-CHANNEL_NAME="mychannel"
+CHANNEL_NAME="mychannel1"
 
 echo $CHANNEL_NAME
 
@@ -23,7 +23,7 @@ configtxgen -profile OrdererGenesis -configPath . -channelID $SYS_CHANNEL  -outp
 
 
 # Generate channel configuration block
-configtxgen -profile BasicChannel -configPath . -outputCreateChannelTx ./mychannel.tx -channelID $CHANNEL_NAME
+configtxgen -profile BasicChannel -configPath . -outputCreateChannelTx ./mychannel1.tx -channelID $CHANNEL_NAME
 
 echo "#######    Generating anchor peer update for Org1MSP  ##########"
 configtxgen -profile BasicChannel -configPath . -outputAnchorPeersUpdate ./Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP
